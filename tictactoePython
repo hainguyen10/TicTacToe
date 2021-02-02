@@ -1,0 +1,89 @@
+def displayBoard(board):
+    print(board[0], board[1], board[2])
+    print(board[3], board[4], board[5])
+    print(board[6], board[7], board[8])
+
+
+def getMove(board, location, player):
+    move = input(player + ", enter your move: ")
+    while move not in location or isTaken(board, int(move) - 1):
+        move = input(player + ", enter your move: ")
+    return move
+
+
+def isTaken(board, move):
+    if (board[move] == 'X' or board[move] == 'O'):
+        print('The Place already taken')
+        return True
+    return False
+
+
+def win(board, symbol):
+    if board[0] == symbol and board[1] == symbol and board[2] == symbol:
+        return True
+    if board[3] == symbol and board[4] == symbol and board[5] == symbol:
+        return True
+    if board[6] == symbol and board[7] == symbol and board[8] == symbol:
+        return True
+    if board[0] == symbol and board[3] == symbol and board[6] == symbol:
+        return True
+    if board[1] == symbol and board[4] == symbol and board[7] == symbol:
+        return True
+    if board[2] == symbol and board[5] == symbol and board[8] == symbol:
+        return True
+    if board[0] == symbol and board[4] == symbol and board[8] == symbol:
+        return True
+    if board[2] == symbol and board[4] == symbol and board[6] == symbol:
+        return True
+    else:
+        return False
+    print('Congraduation! ', symbol, ', you won!')
+    return player_win
+
+
+def tieGame(board):
+    tie_game = True;
+    for i in range(0, 9):
+        if board[i] == '-':
+            tie_game = False
+            break
+
+    return tie_game
+
+
+def main():
+    board = ['-', '-', '-', '-', '-', '-', '-', '-', '-']
+    location = ['1', '2', '3', '4', '5', '6', '7', '8', '9', ]
+    print('This program will allow two players to play the game of tic-tac-toe.')
+    print("Player 1 has 'X', and player 2 has 'O'.")
+    player1 = input('Enter the name of player 1st: ')
+    player2 = input('Enter the name of player 2nd: ')
+    print('Enter your mark using the board position shown belown.')
+    # 1st function
+    displayBoard(location)
+    # 2nd function
+    player = player1
+    playerSymbol = 'X'
+    print(player, "You are playing " + playerSymbol)
+    displayBoard(board)
+    game_Over = False
+    while game_Over == False:
+        move = getMove(board, location, player)
+        board[int(move) - 1] = playerSymbol
+        displayBoard(board)
+        if win(board, playerSymbol):
+            print(player, "you won!")
+            game_Over = True
+        elif tieGame(board):
+            print("Game Tie")
+            game_Over = True
+
+        if (player == player1):
+            player = player2
+            playerSymbol = 'O'
+        else:
+            player = player1
+            playerSymbol = 'X'
+
+
+main()
